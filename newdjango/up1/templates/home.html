@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная — Аренда авто{% endblock %}
+
+{% block style %}
+<style>
+  .hero-section {
+    background: url("{% static 'img/hero.jpg' %}") center/cover no-repeat;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+  }
+
+  .features img {
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .features h4 {
+    font-weight: 600;
+  }
+
+  .features p {
+    color: #6c757d;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero-section mb-5">
+    <div class="text-center">
+        <h1 class="display-4 fw-bold">Добро пожаловать в SoulDrive</h1>
+        <p class="lead">Аренда автомобилей на любой вкус и бюджет</p>
+        <a href="{% url 'card_auto' %}" class="btn btn-primary btn-lg mt-3">Смотреть автомобили</a>
+    </div>
+</div>
+
+<div class="container features">
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <img src="{% static 'img/fast.png' %}" alt="Быстро" width="80">
+            <h4 class="mt-3">Быстрое оформление</h4>
+            <p>Забронируйте автомобиль за 5 минут</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <img src="{% static 'img/support.jpg' %}" alt="Поддержка" width="80">
+            <h4 class="mt-3">Поддержка 24/7</h4>
+            <p>Всегда на связи, когда это важно</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <img src="{% static 'img/price.jpg' %}" alt="Цены" width="80">
+            <h4 class="mt-3">Доступные цены</h4>
+            <p>Прозрачные тарифы и без скрытых платежей</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

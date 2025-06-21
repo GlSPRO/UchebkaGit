@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Мои бронирования{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Мои бронирования</h2>
+
+    {% if bookings %}
+        <ul class="list-group">
+            {% for booking in bookings %}
+                <li class="list-group-item">
+                    <strong>{{ booking.car.brand }} {{ booking.car.model }}</strong><br>
+                    Даты: {{ booking.start_date }} – {{ booking.end_date }}<br>
+                    Сумма: {{ booking.total_price }} ₽
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет бронирований.</p>
+    {% endif %}
+</div>
+{% endblock %}

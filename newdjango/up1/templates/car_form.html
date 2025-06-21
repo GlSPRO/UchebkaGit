@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} автомобиль</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .image-block {
+            position: relative;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .image-block img {
+            max-width: 150px;
+            max-height: 100px;
+            border-radius: 4px;
+            object-fit: contain;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .form-controls {
+            flex-grow: 1;
+        }
+        .delete-checkbox {
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body class="container mt-4">
+<h2 class="mb-4">{% if form.instance.pk %}Редактировать автомобиль{% else %}Добавить автомобиль{% endif %}</h2>
+
+<form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    
+    <div class="mb-4">
+        {{ form.as_p }}
+    </div>
+
+    {{ formset.management_form }}  {# Очень важно! #}
+
+    {% for form in formset %}
+        <div class="image-block">
+            {% if form.instance.pk and form.instance.image %}
+                <img src="{{ form.instance.image.url }}" alt="Фото автомобиля">
+            {% else %}
+                <div style="width:150px; height:100px; background:#eee; display:flex; align-items:center; justify-content:center; color:#999; font-size:14px;">
+                    Нет изображения
+                </div>
+            {% endif %}
+            <div class="form-controls">
+                {{ form.id }}  {# Скрытое поле id #}
+                <div class="mb-2">
+                    {{ form.image.label_tag }}<br>
+                    {{ form.image }}
+                </div>
+                {% if form.DELETE %}
+                <div class="form-check delete-checkbox">
+                    {{ form.DELETE }} 
+                    {{ form.DELETE.label_tag }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="{% url 'custom_admin' %}" class="btn btn-secondary ms-2">Назад</a>
+</form>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

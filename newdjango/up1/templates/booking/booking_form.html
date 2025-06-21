@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Бронирование автомобиля{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Бронирование автомобиля</h2>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4>{{ car.brand }} {{ car.model }}</h4>
+            <p>Категория: {{ car.category.name }}</p>
+            <p>Цена: {{ car.daily_price }} ₽/сутки</p>
+        </div>
+    </div>
+
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert 
+            {% if message.tags == 'error' %}alert-danger
+            {% elif message.tags == 'warning' %}alert-warning
+            {% elif message.tags == 'success' %}alert-success
+            {% else %}alert-info{% endif %} 
+            alert-dismissible fade show" role="alert">
+            
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        {% endif %}
+
+
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="mb-3">
+            <label for="id_start_date" class="form-label">Дата начала аренды:</label>
+            {{ form.start_date }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_end_date" class="form-label">Дата окончания аренды:</label>
+            {{ form.end_date }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Итоговая сумма:</label>
+            <input type="text" id="total_price" class="form-control" readonly>
+        </div>
+
+        <input type="hidden" name="car" value="{{ car.id }}">
+
+        <button type="submit" class="btn btn-primary">Подтвердить бронирование</button>
+    </form>
+</div>
+
+<script>
+    const startInput = document.getElementById('id_start_date');
+    const endInput = document.getElementById('id_end_date');
+    const totalPriceInput = document.getElementById('total_price');
+    const pricePerDay = parseFloat("{{ car.daily_price|floatformat:'2'|default:'0' }}".replace(',', '.'));
+
+    function updateTotal() {
+        const start = new Date(startInput.value);
+        const end = new Date(endInput.value);
+
+        if (start && end && end > start) {
+            const diffDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+            totalPriceInput.value = (diffDays * pricePerDay).toFixed(2) + ' ₽';
+        } else {
+            totalPriceInput.value = '';
+        }
+    }
+
+    startInput.addEventListener('change', updateTotal);
+    endInput.addEventListener('change', updateTotal);
+</script>
+{% endblock %}

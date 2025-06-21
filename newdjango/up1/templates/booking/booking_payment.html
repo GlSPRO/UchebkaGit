@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Оплата бронирования{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Оплата бронирования</h2>
+
+    <p><strong>Авто:</strong> {{ booking.car.brand }} {{ booking.car.model }}</p>
+    <p><strong>Срок:</strong> {{ booking.start_date }} — {{ booking.end_date }}</p>
+    <p><strong>Сумма к оплате:</strong> {{ booking.total_price }} ₽</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="payment_type" class="form-label">Выберите тип оплаты:</label>
+            <select name="payment_type" id="payment_type" class="form-select" required>
+                <option value="" disabled selected>-- Выберите --</option>
+                {% for type in payment_types %}
+                    <option value="{{ type.id }}">{{ type.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Оплатить</button>
+    </form>
+
+    <a href="{% url 'my_bookings' %}" class="btn btn-outline-primary mt-3">Перейти в мои бронирования</a>
+</div>
+{% endblock %}

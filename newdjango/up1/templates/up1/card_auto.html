@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Автомобили{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">Наш автопарк</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+    {% for car in cars %}
+        {% include 'includes/car_card.html' with car=car %}
+    {% endfor %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Контакты{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Свяжитесь с нами</h2>
+<div class="row">
+    <div class="col-md-6">
+        <p><strong>📞 Телефон:</strong> +7 (900) 000-00-00</p>
+        <p><strong>✉️ Email:</strong> info@souldrive.ru</p>
+        <p><strong>📍 Адрес:</strong> г. Москва, ул. Автопарковая, 10</p>
+    </div>
+    <div class="col-md-6">
+        <form>
+            <div class="mb-3">
+                <label for="name" class="form-label">Имя</label>
+                <input type="text" class="form-control" id="name" placeholder="Ваше имя">
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Сообщение</label>
+                <textarea class="form-control" id="message" rows="4" placeholder="Ваш вопрос"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

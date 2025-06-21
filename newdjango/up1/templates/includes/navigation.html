@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">SoulDrive</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Главная</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contacts' %}">Контакты</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'conditions' %}">Условия</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'card_auto' %}">Авто</a>
+        </li>
+
+        {% if user.is_authenticated and user.role and user.role.name == "манагер" %}
+        <li class="nav-item">
+          <a class="nav-link text-warning" href="{% url 'custom_admin' %}">Админ панель</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
